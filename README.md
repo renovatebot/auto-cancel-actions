@@ -7,3 +7,7 @@ Github app to autocancel previous builds of github workflows.
 ## Deployment
 
 see https://probot.github.io/docs/deployment/#deploy-the-app
+
+## Configuration
+
+see https://probot.github.io/docs/configuration/

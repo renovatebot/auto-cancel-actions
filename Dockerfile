@@ -19,6 +19,17 @@ RUN yarn compile
 
 FROM base as final
 
+EXPOSE 3000
 
+COPY package.json package.json
+COPY --from=build /usr/src/app/dist /usr/src/app/dist
+
+RUN set -ex; \
+  mkdir dist; \
+  echo "#!/bin/bash" > /usr/local/bin/auto-cancel-actions; \
+  echo "node /usr/src/app/dist" >> /usr/local/bin/auto-cancel-actions; \
+  chmod +x /usr/local/bin/auto-cancel-actions;
+
+CMD ["auto-cancel-actions"]
 
 USER 1000
