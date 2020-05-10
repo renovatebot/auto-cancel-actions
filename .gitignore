@@ -1,0 +1,9 @@
+node_modules/
+.vs/
+dist/
+coverage/
+
+# yarn
+yarn-error.log
+
+test.mjs
