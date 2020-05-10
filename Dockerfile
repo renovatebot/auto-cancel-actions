@@ -1,4 +1,4 @@
-FROM renovate/buildpack:2-node as base
+FROM renovate/buildpack:2-node@sha256:440c5df813ee4a1c19277f2c77b9dd1dd74704a332fdbadc8e7649f063cd34e3 as base
 
 LABEL org.opencontainers.image.source="https://github.com/renovatebot/auto-cancel-actions"
 
