@@ -37,10 +37,10 @@ export class Runner {
       }
       const cfg = await loadConfig(this._context, log);
       if (cfg.version !== 1) {
-        log.error(cfg, 'Invalid config version');
+        log.error({ cfg }, 'Invalid config version');
         return;
       }
-      log(cfg, 'config');
+      log({ cfg }, 'config');
       const wfres = await this._getWorkflowId(cfg);
       if (!wfres) {
         return;
@@ -49,7 +49,7 @@ export class Runner {
       const { data: runs } = await github.actions.listWorkflowRuns(
         context.repo({ ...wf })
       );
-      log({ event, run_id, run_number }, 'Current run data');
+      log({ run: { event, run_id, run_number } }, 'Current run data');
       for (const run of runs.workflow_runs) {
         if (run.id === run_id) {
           log(chalk.yellow('Ignore me'), ':', chalk.grey(run.html_url));
