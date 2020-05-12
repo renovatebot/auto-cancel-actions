@@ -9,7 +9,7 @@ on:
   pull_request:
 
 env:
-  IMAGE: docker.pkg.github.com/renovatebot/auto-cancel-actions/app
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/app
 
 jobs:
   build:
@@ -48,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - uses: actions/checkout@v2
+
       - name: glith deploy
         if: ${{ github.ref == 'refs/heads/master'}}
         run: |
