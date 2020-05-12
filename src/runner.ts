@@ -37,10 +37,10 @@ export class Runner {
       }
       const cfg = await loadConfig(this._context, log);
       if (cfg.version !== 1) {
-        log.error({ cfg }, 'Invalid config version');
+        log.error(cfg, 'Invalid config version');
         return;
       }
-      log({ cfg }, 'config');
+      log(cfg, 'config');
       const wfres = await this._getWorkflowId(cfg);
       if (!wfres) {
         return;
@@ -120,6 +120,7 @@ export class Runner {
     log(chalk.yellow('Ignore branch:'), wf.head_branch);
     return false;
   }
+
   private async _getWorkflowId(cfg: Config): Promise<WorkflowData | null> {
     const context = this._context;
     const { github: api, log, payload } = context;
@@ -142,7 +143,7 @@ export class Runner {
         event: wf.event,
       };
     } catch (e) {
-      log.error(chalk.red('unexpected error'), e);
+      log.error(e, 'unexpected error');
       return null;
     }
   }
