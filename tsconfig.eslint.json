@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": false,
+    "skipLibCheck": true,
+    "incremental": true,
+    "types": ["node"]
+  },
+  "include": ["**/*.js", "**/*.ts", ".eslintrc.js"]
+}

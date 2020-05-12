@@ -4,7 +4,7 @@ module.exports = {
     node: true,
   },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'jest'],
   extends: [
     'eslint:recommended',
     'plugin:import/errors',
@@ -17,8 +17,13 @@ module.exports = {
     'prettier/@typescript-eslint',
   ],
   parserOptions: {
+    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    sourceType: 'module',
+    ecmaFeatures: {
+      jsx: false,
+    },
     tsconfigRootDir: __dirname,
-    project: ['./tsconfig.json'],
+    project: ['./tsconfig.eslint.json'],
   },
   rules: {
     curly: [2, 'all'],
@@ -40,6 +45,10 @@ module.exports = {
     '@typescript-eslint/camelcase': 0,
   },
   overrides: [
+    {
+      files: ['*.ts'],
+      rules: {},
+    },
     {
       files: ['**/*.js', '**/*.mjs'],
       rules: {

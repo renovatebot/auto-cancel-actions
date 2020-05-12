@@ -1,9 +1,9 @@
-import { getName } from './utils';
-import { isbranchAllowed } from '../src/filter';
+import { getName } from '../test/utils';
+import { isbranchAllowed } from './filter';
 
 describe(getName(__filename), () => {
   describe('isbranchAllowed', () => {
-    it('works', () => {
+    it('not master', () => {
       const patterns = ['!master'];
 
       expect(isbranchAllowed('master', patterns)).toBe(false);
@@ -11,7 +11,7 @@ describe(getName(__filename), () => {
       expect(isbranchAllowed('renovate/test', patterns)).toBe(true);
     });
 
-    it('renovate only', () => {
+    it('only some', () => {
       const patterns = ['master', 'renovate/**'];
 
       expect(isbranchAllowed('master', patterns)).toBe(true);

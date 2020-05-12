@@ -1,11 +1,10 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "sourceMap": false,
-    "rootDir": ".",
-    "outDir": "../dist",
     "skipLibCheck": true,
     "incremental": true,
     "types": ["node"]
-  }
+  },
+  "files": ["src/index.ts", "src/missing.d.ts"]
 }
