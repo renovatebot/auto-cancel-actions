@@ -11,20 +11,25 @@
   },
   "scripts": {
     "compile": "cd src && ncc build ./index.ts -o ../dist",
+    "compile:ts": "tsc -p src",
     "eslint": "eslint . --ext .js,.mjs,.ts",
     "eslint:fix": "yarn eslint --fix",
     "lint": "run-s eslint prettier",
     "prettier": "prettier \"{**/*,*}.*\" --list-different",
     "prettier:fix": "prettier \"{**/*,*}.*\" --write",
     "run": "node dist",
-    "start": "run-s compile run"
+    "start": "run-s compile:ts run"
   },
   "dependencies": {
     "@sindresorhus/is": "2.1.1",
     "probot": "9.11.3"
   },
   "devDependencies": {
+    "@types/bunyan": "1.8.6",
+    "@types/express": "4.17.6",
+    "@types/ioredis": "4.16.1",
     "@types/jest": "25.2.1",
+    "@types/lru-cache": "5.1.0",
     "@types/node": "12.12.38",
     "@types/semver": "7.1.0",
     "@typescript-eslint/eslint-plugin": "2.32.0",
