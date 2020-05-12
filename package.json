@@ -18,9 +18,12 @@
     "prettier": "prettier \"{**/*,*}.*\" --list-different",
     "prettier:fix": "prettier \"{**/*,*}.*\" --write",
     "run": "node dist",
-    "start": "run-s compile run"
+    "start": "run-s compile run",
+    "test": "jest"
   },
   "dependencies": {
+    "@sindresorhus/is": "2.1.1",
+    "minimatch": "3.0.4",
     "probot": "9.11.3"
   },
   "devDependencies": {

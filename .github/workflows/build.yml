@@ -19,8 +19,26 @@ jobs:
 
       - run: yarn lint
 
+      - run: yarn jest --maxWorkers=2 --ci --coverage
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v1
+        if: always()
+        continue-on-error: true
+        with:
+          name: coverage
+          path: coverage
+
+      - name: Codecov
+        shell: bash
+        if: always()
+        continue-on-error: true
+        run: bash <(curl -s https://codecov.io/bash)
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
       - name: glith deploy
-        if: ${{ github.ref == 'refs/heads/master'}}
+        if: github.ref == 'refs/heads/master'
         run: |
           if [[ ! -z "$GLITCH_PROJECT_ID" ]] && [[ ! -z "$GLITCH_TOKEN" ]]
           then
