@@ -1,5 +1,4 @@
 [![Build status](https://github.com/renovatebot/auto-cancel-actions/workflows/build/badge.svg)](https://github.com/renovatebot/auto-cancel-actions/actions?query=workflow%3Abuild)
-[![Glitch Badge](https://badge.glitch.me/renovatebot-auto-cancel-actions)](https://glitch.com/~renovatebot-auto-cancel-actions)
 
 # auto-cancel-actions
 
