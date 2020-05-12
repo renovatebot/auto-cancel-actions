@@ -2,20 +2,31 @@ import Webhooks from '@octokit/webhooks';
 import is from '@sindresorhus/is';
 import chalk from 'chalk';
 import { Context, Octokit } from 'probot';
+import { LoggerWithTarget } from 'probot/lib/wrap-logger';
 import { dryRun, loadConfig } from './config';
 import { isbranchAllowed } from './filter';
 import { Config, WorkflowData, isEvent } from './types';
 
 export class Runner {
+  private readonly _log: LoggerWithTarget;
   constructor(
     private readonly _context: Context<Webhooks.WebhookPayloadCheckRun>
-  ) {}
+  ) {
+    const { payload, log } = _context;
+    const ctx = {
+      repo: payload.repository.name,
+      check_run: payload.check_run.id,
+    };
+
+    this._log = log.child(ctx);
+  }
 
   async run(): Promise<void> {
+    const log = this._log;
     const context = this._context;
-    const { github, log, payload } = context;
+    const { github, payload } = context;
     const id = payload.check_run.id;
-    log({ repo: payload.repository.full_name }, 'Running check:', `${id}`);
+    log('Running check ...');
     try {
       const { data: check } = await github.checks.get(
         context.repo({ check_run_id: id })
@@ -24,7 +35,7 @@ export class Runner {
         log({ app: check.app.slug }, 'Ignore app');
         return;
       }
-      const cfg = await loadConfig(this._context);
+      const cfg = await loadConfig(this._context, log);
       if (cfg.version !== 1) {
         log.error({ cfg }, 'Invalid config version');
         return;
@@ -38,7 +49,7 @@ export class Runner {
       const { data: runs } = await github.actions.listWorkflowRuns(
         context.repo({ ...wf })
       );
-      log('event:', event);
+      log({ event, run_id, run_number }, 'Current run data');
       for (const run of runs.workflow_runs) {
         if (run.id === run_id) {
           log(chalk.yellow('Ignore me'), ':', chalk.grey(run.html_url));
@@ -82,7 +93,7 @@ export class Runner {
         );
       }
     } catch (e) {
-      log.error(chalk.red('unexpected error'), e);
+      log.error(e, 'unexpected error');
     }
   }
 
@@ -90,7 +101,7 @@ export class Runner {
     cfg: Config,
     wf: Octokit.ActionsGetWorkflowRunResponse
   ): boolean {
-    const { log } = this._context;
+    const log = this._log;
     if (!isEvent(wf.event)) {
       log.warn('Invalid event:', wf.event);
       return false;

@@ -1,8 +1,9 @@
 import Webhooks from '@octokit/webhooks';
 import { Context } from 'probot';
+import { LoggerWithTarget } from 'probot/lib/wrap-logger';
 import { Config } from './types';
 export const dryRun = process.env.DRY_RUN === 'true';
-export const configFile = '.github/auto-cancel-actions.yml';
+export const configFile = 'auto-cancel-actions.yml';
 
 export const defaultConfig: Config = {
   version: 1,
@@ -11,12 +12,16 @@ export const defaultConfig: Config = {
 };
 
 export async function loadConfig(
-  context: Context<Webhooks.WebhookPayloadCheckRun>
+  context: Context<Webhooks.WebhookPayloadCheckRun>,
+  log: LoggerWithTarget
 ): Promise<Config> {
   const res = (await context.config<Config>(configFile)) as Config;
 
   if (!res) {
-    context.log('Not configured');
+    log(
+      { repo: context.payload.repository.full_name, file: configFile },
+      'Not configured'
+    );
   }
 
   return res ?? defaultConfig;
