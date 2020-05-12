@@ -15,8 +15,10 @@ describe(getName(__filename), () => {
       const patterns = ['master', 'renovate/**'];
 
       expect(isbranchAllowed('master', patterns)).toBe(true);
-      expect(isbranchAllowed('devel', patterns)).toBe(false);
       expect(isbranchAllowed('renovate/some-branch', patterns)).toBe(true);
+
+      expect(isbranchAllowed('devel', patterns)).toBe(false);
+      expect(isbranchAllowed('test/master', patterns)).toBe(false);
     });
   });
 });

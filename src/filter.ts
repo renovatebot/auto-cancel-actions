@@ -1,5 +1,5 @@
-import minimatch from 'minimatch';
+import micromatch from 'micromatch';
 
 export function isbranchAllowed(branch: string, patterns: string[]): boolean {
-  return patterns.some((pattern) => minimatch(branch, pattern));
+  return micromatch.isMatch(branch, patterns);
 }
