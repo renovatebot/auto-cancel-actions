@@ -14,7 +14,7 @@ export class Runner {
   ) {
     const { payload, log } = _context;
     const ctx = {
-      repo: payload.repository.name,
+      repo: payload.repository.full_name,
       check_run: payload.check_run.id,
     };
 
