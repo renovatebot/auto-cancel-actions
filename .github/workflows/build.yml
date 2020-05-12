@@ -50,6 +50,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - run: yarn install --frozen-lockfile --link-duplicates
+
       - name: glith deploy
         if: ${{ github.ref == 'refs/heads/master'}}
         run: |
