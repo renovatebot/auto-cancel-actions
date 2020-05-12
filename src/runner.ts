@@ -12,12 +12,13 @@ export class Runner {
   ) {}
 
   async run(): Promise<void> {
-    const { github, log, repo, payload } = this._context;
+    const context = this._context;
+    const { github, log, payload } = context;
     const id = payload.check_run.id;
     log('Running check:', chalk.grey(`${id}`));
     try {
       const { data: check } = await github.checks.get(
-        repo({ check_run_id: id })
+        context.repo({ check_run_id: id })
       );
       if (check.app.slug !== 'github-actions') {
         log('Ignore app:', check.app.slug);
@@ -34,7 +35,7 @@ export class Runner {
       }
       const { run_id, run_number, event, ...wf } = wfres;
       const { data: runs } = await github.actions.listWorkflowRuns(
-        repo({ ...wf })
+        context.repo({ ...wf })
       );
       log('event:', event);
       for (const run of runs.workflow_runs) {
@@ -75,7 +76,9 @@ export class Runner {
           continue;
         }
         log.info(chalk.blue('Cancel:'), ':', run.id, chalk.grey(run.html_url));
-        await github.actions.cancelWorkflowRun(repo({ run_id: run.id }));
+        await github.actions.cancelWorkflowRun(
+          context.repo({ run_id: run.id })
+        );
       }
     } catch (e) {
       log.error(chalk.red('unexpected error'), e);
@@ -106,13 +109,14 @@ export class Runner {
     return false;
   }
   private async _getWorkflowId(cfg: Config): Promise<WorkflowData | null> {
-    const { github: api, log, payload, repo } = this._context;
+    const context = this._context;
+    const { github: api, log, payload } = context;
     try {
       const { data: job } = await api.actions.getWorkflowJob(
-        repo({ job_id: payload.check_run.id })
+        context.repo({ job_id: payload.check_run.id })
       );
       const { data: wf } = await api.actions.getWorkflowRun(
-        repo({ run_id: job.run_id })
+        context.repo({ run_id: job.run_id })
       );
       if (!this._check(cfg, wf)) {
         return null;
