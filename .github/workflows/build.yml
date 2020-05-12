@@ -43,3 +43,15 @@ jobs:
         run: |
           docker tag app ${IMAGE}
           docker push ${IMAGE}
+        env:
+          GLITCH_PROJECT_ID: { { secrets.GLITCH_PROJECT_ID } }
+          GLITCH_TOKEN: { { secrets.GLITCH_TOKEN } }
+          GH_REPO:
+
+      - name: glith deploy
+        if: ${{github.ref == 'refs/heads/master' && secrets.GLITCH_PROJECT_ID  && secrets.GLITCH_TOKEN }}
+        run: yarn sync-glitch
+        env:
+          GLITCH_PROJECT_ID: ${{ secrets.GLITCH_PROJECT_ID }}
+          GLITCH_TOKEN: ${{ secrets.GLITCH_TOKEN }}
+          GH_REPO: ${{ github.repository }}

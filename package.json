@@ -6,7 +6,7 @@
   "repository": "https://github.com/renovatebot/auto-cancel-actions.git",
   "author": "Rhys Arkins <rhys@arkins.net>",
   "engines": {
-    "node": ">=12.0.0",
+    "node": "^12.0.0",
     "yarn": ">=1.22.0"
   },
   "scripts": {
@@ -16,7 +16,8 @@
     "lint": "run-s eslint prettier",
     "prettier": "prettier \"{**/*,*}.*\" --list-different",
     "prettier:fix": "prettier \"{**/*,*}.*\" --write",
-    "start": "probot run ./lib/index.js"
+    "run": "node dist",
+    "start": "run-s compile run"
   },
   "dependencies": {
     "@sindresorhus/is": "2.1.1",
@@ -40,6 +41,7 @@
     "prettier": "2.0.5",
     "prettier-plugin-package": "1.0.0",
     "pretty-quick": "2.0.1",
+    "sync-glitch-cli": "2.0.1",
     "ts-jest": "25.5.1",
     "typescript": "3.8.3"
   },
