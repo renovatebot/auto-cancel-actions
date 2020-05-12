@@ -44,20 +44,20 @@ jobs:
           docker tag app ${IMAGE}
           docker push ${IMAGE}
 
-    glitch:
-      runs-on: ubuntu-latest
-      timeout-minutes: 10
-      steps:
-        - name: glith deploy
-          if: ${{ github.ref == 'refs/heads/master'}}
-          run: |
-            if [[ ! -z "$GLITCH_PROJECT_ID" ]] && [[ ! -z "$GLITCH_TOKEN" ]]
-            then
-              yarn sync-glitch
-            else
-              echo 'missing secrets'
-            fi
-          env:
-            GLITCH_PROJECT_ID: ${{ secrets.GLITCH_PROJECT_ID }}
-            GLITCH_TOKEN: ${{ secrets.GLITCH_TOKEN }}
-            GH_REPO: ${{ github.repository }}
+  glitch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: glith deploy
+        if: ${{ github.ref == 'refs/heads/master'}}
+        run: |
+          if [[ ! -z "$GLITCH_PROJECT_ID" ]] && [[ ! -z "$GLITCH_TOKEN" ]]
+          then
+            yarn sync-glitch
+          else
+            echo 'missing secrets'
+          fi
+        env:
+          GLITCH_PROJECT_ID: ${{ secrets.GLITCH_PROJECT_ID }}
+          GLITCH_TOKEN: ${{ secrets.GLITCH_TOKEN }}
+          GH_REPO: ${{ github.repository }}
