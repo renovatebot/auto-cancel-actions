@@ -17,14 +17,15 @@
     "prepare": "run-s compile",
     "prettier": "prettier \"{**/*,*}.*\" --list-different",
     "prettier:fix": "prettier \"{**/*,*}.*\" --write",
-    "run": "node dist",
+    "run": "node -r source-map-support/register dist",
     "start": "run-s compile run",
     "test": "jest"
   },
   "dependencies": {
     "@sindresorhus/is": "2.1.1",
     "minimatch": "3.0.4",
-    "probot": "9.11.3"
+    "probot": "9.11.3",
+    "source-map-support": "0.5.19"
   },
   "devDependencies": {
     "@types/bunyan": "1.8.6",
