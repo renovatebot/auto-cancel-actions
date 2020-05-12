@@ -13,9 +13,10 @@ export function isEvent(ev: string): ev is EventType {
 }
 
 export interface Config {
-  version: number;
-  push?: EventConfig;
+  dryRun?: boolean;
   pull_request?: EventConfig;
+  push?: EventConfig;
+  version: number;
 }
 
 export type WorkflowData = {

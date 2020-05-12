@@ -3,7 +3,12 @@ import Webhooks from '@octokit/webhooks';
 import chalk from 'chalk';
 import is from '@sindresorhus/is';
 import { Config, isEvent, WorkflowData } from './types';
-import { defaultConfig, configFile, dryRun } from './config';
+import {
+  defaultConfig,
+  dryRun,
+  loadJsonConfig,
+  loadYamlConfig,
+} from './config';
 import { isbranchAllowed } from './filter';
 
 export class Runner {
@@ -65,7 +70,7 @@ export class Runner {
           );
           continue;
         }
-        if (dryRun) {
+        if (dryRun || cfg.dryRun) {
           log.warn(
             chalk.yellow('[DRY_RUN]'),
             chalk.blue('Would cancel'),
@@ -136,24 +141,7 @@ export class Runner {
   }
 
   private async _loadConfig(): Promise<Config | null> {
-    const context = this._context;
-    const { github, log } = context;
-    try {
-      const { data } = await github.repos.getContents(
-        context.repo({ path: configFile })
-      );
-      if (Array.isArray(data) || typeof data.content !== 'string') {
-        log('Invalid response');
-        return null;
-      }
-
-      return JSON.parse(Buffer.from(data.content, 'base64').toString());
-    } catch (e) {
-      if (e.status === 404) {
-        log.debug('Not configured');
-        return null;
-      }
-      throw e;
-    }
+    const data = await loadJsonConfig(this._context);
+    return data ?? (await loadYamlConfig(this._context));
   }
 }
