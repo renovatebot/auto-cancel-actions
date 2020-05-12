@@ -33,7 +33,8 @@ jobs:
         shell: bash
         if: always()
         continue-on-error: true
-        run: bash <(curl -s https://codecov.io/bash)
+        run: |
+          [[ -z "$CODECOV_TOKEN" ]] && bash <(curl -s https://codecov.io/bash)
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
