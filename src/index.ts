@@ -4,16 +4,19 @@ import chalk from 'chalk';
 
 const dryRun = process.env.DRY_RUN === 'true';
 
+type WorkflowData = {
+  branch: string;
+  event: string;
+  run_id: number;
+  run_number: number;
+  workflow_id: number;
+};
+
 async function getWorkflowId(
   context: Context<Webhooks.WebhookPayloadCheckRun>,
   repo: { repo: string; owner: string },
   id: number
-): Promise<{
-  branch: string;
-  workflow_id: number;
-  run_id: number;
-  run_number: number;
-} | null> {
+): Promise<WorkflowData | null> {
   const { github: api } = context;
   try {
     const { data: job } = await api.actions.getWorkflowJob({
@@ -24,6 +27,7 @@ async function getWorkflowId(
       ...repo,
       run_id: job.run_id,
     });
+
     if (wf.head_branch === 'master') {
       context.log(chalk.yellow('Ignore master'));
       return null;
@@ -34,6 +38,7 @@ async function getWorkflowId(
       branch: wf.head_branch,
       run_id: job.run_id,
       run_number: wf.run_number,
+      event: wf.event,
     };
   } catch (e) {
     context.log.error(chalk.red('unexpected error'), e);
@@ -61,18 +66,15 @@ Probot.run((app: Application) => {
 
       const wfres = await getWorkflowId(context, repo, id);
       if (!wfres) {
-        context.log.warn('Missing workflow data');
         return;
       }
 
-      const { run_id, run_number, ...wf } = wfres;
+      const { run_id, run_number, event, ...wf } = wfres;
 
       const { data: runs } = await context.github.actions.listWorkflowRuns({
         ...repo,
         ...wf,
       });
-
-      const event = context.event;
 
       context.log('event:', event);
 
