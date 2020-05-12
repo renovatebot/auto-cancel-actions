@@ -14,6 +14,7 @@
     "eslint": "eslint . --ext .js,.mjs,.ts",
     "eslint:fix": "yarn eslint --fix",
     "lint": "run-s eslint prettier",
+    "lint:fix": "run-s eslint:fix prettier:fix",
     "prepare": "run-s compile",
     "prettier": "prettier \"{**/*,*}.*\" --list-different",
     "prettier:fix": "prettier \"{**/*,*}.*\" --write",
