@@ -44,7 +44,7 @@ Probot.run((app: Application) => {
     const id = context.payload.check_run.id;
     const repo = context.repo();
 
-    context.log('Running check:', chalk.grey(id));
+    context.log('Running check:', chalk.grey(`${id}`));
 
     try {
       const { data: check } = await context.github.checks.get({
