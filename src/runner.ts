@@ -107,11 +107,11 @@ export class Runner {
       return false;
     }
     const evCfg = cfg[wf.event];
-    if (!is.object(evCfg)) {
+    if (is.undefined(evCfg)) {
       log.debug('Invalid event:', wf.event);
       return false;
     }
-    if (!evCfg.branches) {
+    if (evCfg === null || is.nullOrUndefined(evCfg.branches)) {
       return true;
     }
     if (isbranchAllowed(wf.head_branch, evCfg.branches)) {
