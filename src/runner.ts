@@ -1,15 +1,10 @@
-import { Context, Octokit } from 'probot';
 import Webhooks from '@octokit/webhooks';
-import chalk from 'chalk';
 import is from '@sindresorhus/is';
-import { Config, isEvent, WorkflowData } from './types';
-import {
-  defaultConfig,
-  dryRun,
-  loadJsonConfig,
-  loadYamlConfig,
-} from './config';
+import chalk from 'chalk';
+import { Context, Octokit } from 'probot';
+import { dryRun, loadConfig } from './config';
 import { isbranchAllowed } from './filter';
+import { Config, WorkflowData, isEvent } from './types';
 
 export class Runner {
   constructor(
@@ -20,20 +15,21 @@ export class Runner {
     const context = this._context;
     const { github, log, payload } = context;
     const id = payload.check_run.id;
-    log('Running check:', chalk.grey(`${id}`));
+    log({ repo: payload.repository.full_name }, 'Running check:', `${id}`);
     try {
       const { data: check } = await github.checks.get(
         context.repo({ check_run_id: id })
       );
       if (check.app.slug !== 'github-actions') {
-        log('Ignore app:', check.app.slug);
+        log({ app: check.app.slug }, 'Ignore app');
         return;
       }
-      const cfg = (await this._loadConfig()) ?? defaultConfig;
+      const cfg = await loadConfig(this._context);
       if (cfg.version !== 1) {
-        log.warn('Invalid config version:', cfg.version);
+        log.error({ cfg }, 'Invalid config version');
         return;
       }
+      log({ cfg }, 'config');
       const wfres = await this._getWorkflowId(cfg);
       if (!wfres) {
         return;
@@ -138,10 +134,5 @@ export class Runner {
       log.error(chalk.red('unexpected error'), e);
       return null;
     }
-  }
-
-  private async _loadConfig(): Promise<Config | null> {
-    const data = await loadJsonConfig(this._context);
-    return data ?? (await loadYamlConfig(this._context));
   }
 }
