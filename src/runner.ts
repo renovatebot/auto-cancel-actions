@@ -24,7 +24,7 @@ export class Runner {
         log('Ignore app:', check.app.slug);
         return;
       }
-      const cfg = await this._loadConfig();
+      const cfg = (await this._loadConfig()) ?? defaultConfig;
       if (cfg.version !== 1) {
         log.warn('Invalid config version:', cfg.version);
         return;
@@ -135,25 +135,25 @@ export class Runner {
     }
   }
 
-  private async _loadConfig(): Promise<Config> {
-    let res = defaultConfig;
-    const { github, log, repo } = this._context;
+  private async _loadConfig(): Promise<Config | null> {
+    const context = this._context;
+    const { github, log } = context;
     try {
       const { data } = await github.repos.getContents(
-        repo({ path: configFile })
+        context.repo({ path: configFile })
       );
-      if (Array.isArray(data) || !data.content) {
+      if (Array.isArray(data) || typeof data.content !== 'string') {
         log('Invalid response');
-      } else {
-        res = JSON.parse(data.content);
+        return null;
       }
+
+      return JSON.parse(Buffer.from(data.content, 'base64').toString());
     } catch (e) {
       if (e.status === 404) {
         log.debug('Not configured');
-        return defaultConfig;
+        return null;
       }
-      log.error(chalk.red('unexpected error'), e);
+      throw e;
     }
-    return res;
   }
 }
