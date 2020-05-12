@@ -24,8 +24,10 @@ async function getWorkflowId(
       ...repo,
       run_id: job.run_id,
     });
-
-    wf.head_branch;
+    if (wf.head_branch === 'master') {
+      context.log(chalk.yellow('Ignore master'));
+      return null;
+    }
     const [, workflow_id] = /\/(\d+)$/.exec(wf.workflow_url) ?? [];
     return {
       workflow_id: parseInt(workflow_id),
@@ -33,7 +35,8 @@ async function getWorkflowId(
       run_id: job.run_id,
       run_number: wf.run_number,
     };
-  } catch {
+  } catch (e) {
+    context.log.error(chalk.red('unexpected error'), e);
     return null;
   }
 }
@@ -126,7 +129,7 @@ Probot.run((app: Application) => {
         });
       }
     } catch (e) {
-      context.log.error('unexpected error', e);
+      context.log.error(chalk.red('unexpected error'), e);
     }
   });
 });
