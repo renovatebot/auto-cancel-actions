@@ -45,8 +45,13 @@ jobs:
           docker push ${IMAGE}
 
       - name: glith deploy
-        if: ${{ github.ref == 'refs/heads/master' && secrets.GLITCH_PROJECT_ID != '' && secrets.GLITCH_TOKEN != '' }}
-        run: yarn sync-glitch
+        if: ${{ github.ref == 'refs/heads/master'}}
+        run: |
+          if [[ ! -z "$GLITCH_PROJECT_ID" ]] && [[ ! -z "$GLITCH_TOKEN" ]] then;
+            yarn sync-glitch
+          else
+            echo 'missing secrets'
+          fi
         env:
           GLITCH_PROJECT_ID: ${{ secrets.GLITCH_PROJECT_ID }}
           GLITCH_TOKEN: ${{ secrets.GLITCH_TOKEN }}
