@@ -55,18 +55,13 @@ Probot.run((app: Application) => {
         check_run_id: id,
       });
       if (check.app.slug !== 'github-actions') {
-        context.log(
-          'Wrong app',
-          chalk.grey(JSON.stringify(check.app, null, 2))
-        );
-        // ignore
+        context.log('Ignore app:', check.app.slug);
         return;
       }
 
       const wfres = await getWorkflowId(context, repo, id);
       if (!wfres) {
-        context.log('Missing workflow data');
-        // ignore
+        context.log.warn('Missing workflow data');
         return;
       }
 
