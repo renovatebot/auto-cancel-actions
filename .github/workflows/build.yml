@@ -8,49 +8,16 @@ on:
 
   pull_request:
 
-env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/app
-
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    timeout-minutes: 10
-
-    env:
-      DOCKER_BUILDKIT: 1
-
-    steps:
-      - name: docker-config
-        uses: renovatebot/internal-tools@v0
-        with:
-          command: docker-config
-
-      - uses: actions/checkout@v2
-
-      # - name: Docker registry login
-      #   run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-
-      - name: Docker registry login
-        if: ${{github.ref == 'refs/heads/master'}}
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
-      - name: build
-        run: docker build -t app --cache-from ${IMAGE} .
-
-      - name: publish
-        if: ${{github.ref == 'refs/heads/master'}}
-        run: |
-          docker tag app ${IMAGE}
-          docker push ${IMAGE}
-
-  glitch:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v2
 
       - run: yarn install --frozen-lockfile --link-duplicates
+
+      - run: yarn lint
 
       - name: glith deploy
         if: ${{ github.ref == 'refs/heads/master'}}
