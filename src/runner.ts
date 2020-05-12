@@ -106,14 +106,13 @@ export class Runner {
     return false;
   }
   private async _getWorkflowId(cfg: Config): Promise<WorkflowData | null> {
-    const context = this._context;
-    const { github: api, log } = this._context;
+    const { github: api, log, payload, repo } = this._context;
     try {
       const { data: job } = await api.actions.getWorkflowJob(
-        context.repo({ job_id: context.payload.check_run.id })
+        repo({ job_id: payload.check_run.id })
       );
       const { data: wf } = await api.actions.getWorkflowRun(
-        context.repo({ run_id: job.run_id })
+        repo({ run_id: job.run_id })
       );
       if (!this._check(cfg, wf)) {
         return null;
