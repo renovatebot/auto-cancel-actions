@@ -18,10 +18,7 @@ export async function loadConfig(
   const res = (await context.config<Config>(configFile)) as Config;
 
   if (!res) {
-    log(
-      { repo: context.payload.repository.full_name, file: configFile },
-      'Not configured'
-    );
+    log.warn({ file: configFile }, 'Not configured');
   }
 
   return res ?? defaultConfig;
