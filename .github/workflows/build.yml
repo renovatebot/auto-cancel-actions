@@ -47,7 +47,8 @@ jobs:
       - name: glith deploy
         if: ${{ github.ref == 'refs/heads/master'}}
         run: |
-          if [[ ! -z "$GLITCH_PROJECT_ID" ]] && [[ ! -z "$GLITCH_TOKEN" ]] then;
+          if [[ ! -z "$GLITCH_PROJECT_ID" ]] && [[ ! -z "$GLITCH_TOKEN" ]]
+          then
             yarn sync-glitch
           else
             echo 'missing secrets'
