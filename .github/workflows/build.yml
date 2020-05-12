@@ -45,7 +45,7 @@ jobs:
           docker push ${IMAGE}
 
       - name: glith deploy
-        if: ${{github.ref == 'refs/heads/master' && secrets.GLITCH_PROJECT_ID  && secrets.GLITCH_TOKEN }}
+        if: ${{ github.ref == 'refs/heads/master' && secrets.GLITCH_PROJECT_ID != '' && secrets.GLITCH_TOKEN != '' }}
         run: yarn sync-glitch
         env:
           GLITCH_PROJECT_ID: ${{ secrets.GLITCH_PROJECT_ID }}
