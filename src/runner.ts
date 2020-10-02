@@ -1,16 +1,16 @@
-import Webhooks from '@octokit/webhooks';
+import { ActionsGetWorkflowRunResponseData } from '@octokit/types';
+import { EventPayloads } from '@octokit/webhooks';
 import is from '@sindresorhus/is';
 import chalk from 'chalk';
-import { Context, Octokit } from 'probot';
-import { LoggerWithTarget } from 'probot/lib/wrap-logger';
+import { Context, Logger } from 'probot';
 import { dryRun, loadConfig } from './config';
 import { isbranchAllowed } from './filter';
 import { Config, WorkflowData, isEvent } from './types';
 
 export class Runner {
-  private readonly _log: LoggerWithTarget;
+  private readonly _log: Logger;
   constructor(
-    private readonly _context: Context<Webhooks.WebhookPayloadCheckRun>
+    private readonly _context: Context<EventPayloads.WebhookPayloadCheckRun>
   ) {
     const { payload, log } = _context;
     const ctx = {
@@ -26,13 +26,13 @@ export class Runner {
     const context = this._context;
     const { github, payload } = context;
     const id = payload.check_run.id;
-    log('Running check ...');
+    log.debug('Running check ...');
     try {
       const { data: check } = await github.checks.get(
         context.repo({ check_run_id: id })
       );
       if (check.app.slug !== 'github-actions') {
-        log({ app: check.app.slug }, 'Ignore app');
+        log.debug({ app: check.app.slug }, 'Ignore app');
         return;
       }
       const cfg = await loadConfig(this._context, log);
@@ -40,7 +40,7 @@ export class Runner {
         log.error({ cfg }, 'Invalid config version');
         return;
       }
-      log({ cfg }, 'config');
+      log.debug({ cfg }, 'config');
       const wfres = await this._getWorkflowId(cfg);
       if (!wfres) {
         return;
@@ -49,18 +49,22 @@ export class Runner {
       const { data: runs } = await github.actions.listWorkflowRuns(
         context.repo({ ...wf })
       );
-      log({ run: { event, run_id, run_number } }, 'Current run data');
+      log.debug({ run: { event, run_id, run_number } }, 'Current run data');
       for (const run of runs.workflow_runs) {
         if (run.id === run_id) {
-          log(chalk.yellow('Ignore me'), ':', chalk.grey(run.html_url));
+          log.debug(chalk.yellow('Ignore me'), ':', chalk.grey(run.html_url));
           continue;
         }
         if (run.run_number > run_number) {
-          log(chalk.yellow('Ignore newer'), ':', chalk.grey(run.html_url));
+          log.debug(
+            chalk.yellow('Ignore newer'),
+            ':',
+            chalk.grey(run.html_url)
+          );
           continue;
         }
         if (run.status !== 'in_progress' && run.status !== 'queued') {
-          log(
+          log.debug(
             chalk.yellow(`Ignore state`),
             run.status,
             ':',
@@ -69,7 +73,7 @@ export class Runner {
           continue;
         }
         if (run.event !== event) {
-          log(
+          log.debug(
             chalk.yellow(`Ignore event`),
             run.event,
             ':',
@@ -97,10 +101,7 @@ export class Runner {
     }
   }
 
-  private _check(
-    cfg: Config,
-    wf: Octokit.ActionsGetWorkflowRunResponse
-  ): boolean {
+  private _check(cfg: Config, wf: ActionsGetWorkflowRunResponseData): boolean {
     const log = this._log;
     if (!isEvent(wf.event)) {
       log.warn('Invalid event:', wf.event);
@@ -117,7 +118,7 @@ export class Runner {
     if (isbranchAllowed(wf.head_branch, evCfg.branches)) {
       return true;
     }
-    log(chalk.yellow('Ignore branch:'), wf.head_branch);
+    log.debug(chalk.yellow('Ignore branch:'), wf.head_branch);
     return false;
   }
 
@@ -125,7 +126,7 @@ export class Runner {
     const context = this._context;
     const { github: api, log, payload } = context;
     try {
-      const { data: job } = await api.actions.getWorkflowJob(
+      const { data: job } = await api.actions.getJobForWorkflowRun(
         context.repo({ job_id: payload.check_run.id })
       );
       const { data: wf } = await api.actions.getWorkflowRun(
