@@ -26,13 +26,13 @@ export class Runner {
     const context = this._context;
     const { github, payload } = context;
     const id = payload.check_run.id;
-    log.debug('Running check ...');
+    log.info('Running check ...');
     try {
       const { data: check } = await github.checks.get(
         context.repo({ check_run_id: id })
       );
       if (check.app.slug !== 'github-actions') {
-        log.debug({ app: check.app.slug }, 'Ignore app');
+        log.info({ app: check.app.slug }, 'Ignore app');
         return;
       }
       const cfg = await loadConfig(this._context, log);
@@ -40,7 +40,7 @@ export class Runner {
         log.error({ cfg }, 'Invalid config version');
         return;
       }
-      log.debug({ cfg }, 'config');
+      log.info({ cfg }, 'config');
       const wfres = await this._getWorkflowId(cfg);
       if (!wfres) {
         return;
@@ -49,22 +49,18 @@ export class Runner {
       const { data: runs } = await github.actions.listWorkflowRuns(
         context.repo({ ...wf })
       );
-      log.debug({ run: { event, run_id, run_number } }, 'Current run data');
+      log.info({ run: { event, run_id, run_number } }, 'Current run data');
       for (const run of runs.workflow_runs) {
         if (run.id === run_id) {
-          log.debug(chalk.yellow('Ignore me'), ':', chalk.grey(run.html_url));
+          log.info(chalk.yellow('Ignore me'), ':', chalk.grey(run.html_url));
           continue;
         }
         if (run.run_number > run_number) {
-          log.debug(
-            chalk.yellow('Ignore newer'),
-            ':',
-            chalk.grey(run.html_url)
-          );
+          log.info(chalk.yellow('Ignore newer'), ':', chalk.grey(run.html_url));
           continue;
         }
         if (run.status !== 'in_progress' && run.status !== 'queued') {
-          log.debug(
+          log.info(
             chalk.yellow(`Ignore state`),
             run.status,
             ':',
@@ -73,7 +69,7 @@ export class Runner {
           continue;
         }
         if (run.event !== event) {
-          log.debug(
+          log.info(
             chalk.yellow(`Ignore event`),
             run.event,
             ':',
@@ -118,7 +114,7 @@ export class Runner {
     if (isbranchAllowed(wf.head_branch, evCfg.branches)) {
       return true;
     }
-    log.debug(chalk.yellow('Ignore branch:'), wf.head_branch);
+    log.info(chalk.yellow('Ignore branch:'), wf.head_branch);
     return false;
   }
 
