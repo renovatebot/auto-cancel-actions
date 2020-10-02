@@ -1,6 +1,5 @@
-import Webhooks from '@octokit/webhooks';
-import { Context } from 'probot';
-import { LoggerWithTarget } from 'probot/lib/wrap-logger';
+import { EventPayloads } from '@octokit/webhooks';
+import { Context, Logger } from 'probot';
 import { Config } from './types';
 export const dryRun = process.env.DRY_RUN === 'true';
 export const configFile = 'auto-cancel-actions.yml';
@@ -12,8 +11,8 @@ export const defaultConfig: Config = {
 };
 
 export async function loadConfig(
-  context: Context<Webhooks.WebhookPayloadCheckRun>,
-  log: LoggerWithTarget
+  context: Context<EventPayloads.WebhookPayloadCheckRun>,
+  log: Logger
 ): Promise<Config> {
   const res = (await context.config<Config>(configFile)) as Config;
 
