@@ -3847,10 +3847,10 @@ jest-changed-files@^26.5.0:
     execa "^4.0.0"
     throat "^5.0.0"
 
-jest-circus@26.5.0:
-  version "26.5.0"
-  resolved "https://registry.yarnpkg.com/jest-circus/-/jest-circus-26.5.0.tgz#6aec0dcea19c8122524bade3bf4cf531151984f2"
-  integrity sha512-VXWg+weogrZ2mxT/1/zrmjBAjZtoQy0Dtj+cck8UK0wAcE3GEDh3o0C4Cvt+e6nu57r0dF3aHtUDYX3nwsoUQg==
+jest-circus@26.5.1:
+  version "26.5.1"
+  resolved "https://registry.yarnpkg.com/jest-circus/-/jest-circus-26.5.1.tgz#98d3cd49c2bead5d5ceca8f7b0a1951b59021446"
+  integrity sha512-8tXACLNh1FVGl6tDvu5d6rWVZ0N4peOL3/QlaqZme7a3DtprmjFG6NCQQnLgRYRsv2f5p12OvxVNekRnidNrYw==
   dependencies:
     "@babel/traverse" "^7.1.0"
     "@jest/environment" "^26.5.0"
@@ -3866,7 +3866,7 @@ jest-circus@26.5.0:
     jest-each "^26.5.0"
     jest-matcher-utils "^26.5.0"
     jest-message-util "^26.5.0"
-    jest-runner "^26.5.0"
+    jest-runner "^26.5.1"
     jest-runtime "^26.5.0"
     jest-snapshot "^26.5.0"
     jest-util "^26.5.0"
@@ -4112,6 +4112,32 @@ jest-runner@^26.5.0:
   version "26.5.0"
   resolved "https://registry.yarnpkg.com/jest-runner/-/jest-runner-26.5.0.tgz#77fa74966716ce46a19cfd03ea5e491da4dfc9aa"
   integrity sha512-+FSgnB4dIwov+kqDPrbyATZ/zLMb5AGSQ7oi6mtrbcw9a0D2npuAworKTRAtgWo+XFZtpZwdH+HQAB5l3KrjWg==
+  dependencies:
+    "@jest/console" "^26.5.0"
+    "@jest/environment" "^26.5.0"
+    "@jest/test-result" "^26.5.0"
+    "@jest/types" "^26.5.0"
+    "@types/node" "*"
+    chalk "^4.0.0"
+    emittery "^0.7.1"
+    exit "^0.1.2"
+    graceful-fs "^4.2.4"
+    jest-config "^26.5.0"
+    jest-docblock "^26.0.0"
+    jest-haste-map "^26.5.0"
+    jest-leak-detector "^26.5.0"
+    jest-message-util "^26.5.0"
+    jest-resolve "^26.5.0"
+    jest-runtime "^26.5.0"
+    jest-util "^26.5.0"
+    jest-worker "^26.5.0"
+    source-map-support "^0.5.6"
+    throat "^5.0.0"
+
+jest-runner@^26.5.1:
+  version "26.5.1"
+  resolved "https://registry.yarnpkg.com/jest-runner/-/jest-runner-26.5.1.tgz#a56c1e1fbed7470ae69ebd5456ba4d4443c8701f"
+  integrity sha512-gFHXehvMZD8qwNzaIl2MDFFI99m4kKk06H2xh2u4IkC+tHYIJjE5J175l9cbL3RuU2slfS2m57KZgcPZfbTavQ==
   dependencies:
     "@jest/console" "^26.5.0"
     "@jest/environment" "^26.5.0"
