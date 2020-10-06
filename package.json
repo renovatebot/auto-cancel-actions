@@ -34,7 +34,7 @@
     "@types/jest": "26.0.14",
     "@types/lru-cache": "5.1.0",
     "@types/micromatch": "4.0.1",
-    "@types/node": "12.12.63",
+    "@types/node": "12.12.64",
     "@types/semver": "7.3.4",
     "@typescript-eslint/eslint-plugin": "4.4.0",
     "@typescript-eslint/parser": "4.4.0",
