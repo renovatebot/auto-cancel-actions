@@ -1,3 +1,10 @@
+import { EventPayloads } from '@octokit/webhooks';
+import { Context } from 'probot';
+
+export type ProbotCheckRunContext = Context<
+  EventPayloads.WebhookPayloadCheckRun
+>;
+
 export type EventConfig = {
   branches?: string[];
 };
