@@ -23,7 +23,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@sindresorhus/is": "3.1.2",
+    "@sindresorhus/is": "4.0.0",
     "micromatch": "4.0.2",
     "probot": "10.9.1",
     "source-map-support": "0.5.19"
