@@ -1,17 +1,14 @@
 import { ActionsGetWorkflowRunResponseData } from '@octokit/types';
-import { EventPayloads } from '@octokit/webhooks';
 import is from '@sindresorhus/is';
 import chalk from 'chalk';
-import { Context, Logger } from 'probot';
+import { Logger } from 'probot';
 import { dryRun, loadConfig } from './config';
 import { isbranchAllowed } from './filter';
-import { Config, WorkflowData, isEvent } from './types';
+import { Config, ProbotCheckRunContext, WorkflowData, isEvent } from './types';
 
 export class Runner {
   private readonly _log: Logger;
-  constructor(
-    private readonly _context: Context<EventPayloads.WebhookPayloadCheckRun>
-  ) {
+  constructor(private readonly _context: ProbotCheckRunContext) {
     const { payload, log } = _context;
     const ctx = {
       repo: payload.repository.full_name,
