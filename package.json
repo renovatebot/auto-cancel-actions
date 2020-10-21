@@ -29,13 +29,9 @@
     "source-map-support": "0.5.19"
   },
   "devDependencies": {
-    "@types/express": "4.17.8",
-    "@types/ioredis": "4.17.6",
     "@types/jest": "26.0.15",
-    "@types/lru-cache": "5.1.0",
     "@types/micromatch": "4.0.1",
     "@types/node": "12.12.69",
-    "@types/semver": "7.3.4",
     "@typescript-eslint/eslint-plugin": "4.5.0",
     "@typescript-eslint/parser": "4.5.0",
     "eslint": "7.11.0",
@@ -54,9 +50,6 @@
     "sync-glitch-cli": "2.0.1",
     "ts-jest": "26.4.1",
     "typescript": "4.0.3"
-  },
-  "resolutions": {
-    "@octokit/webhooks": "7.13.0"
   },
   "contributors": [
     "Michael Kriese <michael.kriese@visualon.de>"

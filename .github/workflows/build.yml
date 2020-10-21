@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.3
 
-      - run: yarn install --frozen-lockfile --link-duplicates
+      - run: yarn install --frozen-lockfile
 
       - run: yarn lint
 
