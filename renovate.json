@@ -1,15 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>renovatebot/presets-internal:docker-images"],
-  "packageRules": [
-    {
-      "depTypeList": ["dependencies"],
-      "extends": [":automergePatch"]
-    },
-    {
-      "packageNames": ["prettier"],
-      "packagePatterns": ["^@prettier\\/", "^prettier-plugin-"],
-      "groupName": "prettier packages"
-    }
-  ]
+  "extends": ["github>renovatebot/presets-internal"]
 }
