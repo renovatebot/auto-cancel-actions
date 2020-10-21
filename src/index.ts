@@ -4,9 +4,8 @@ import { ProbotCheckRunContext } from './types';
 
 Probot.run((app: Application) => {
   app.log('App loaded');
-  // TODO: fix types
-  app.on('check_run.created', (context) =>
-    new Runner(context as ProbotCheckRunContext).run()
+  app.on('check_run.created', (context: ProbotCheckRunContext) =>
+    new Runner(context).run()
   );
 }).catch((e) => {
   console.error('unexpected error', e);
