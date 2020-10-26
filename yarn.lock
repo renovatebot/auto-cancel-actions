@@ -683,7 +683,7 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@octokit/webhooks@^7.13.0":
+"@octokit/webhooks@^7.15.0":
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@octokit/webhooks/-/webhooks-7.15.0.tgz#79441b5544e08b66146d67c18922678e054a8d34"
   integrity sha512-B3GpvRSYaPUZv+X3npttozt20K8AKFaLOKJsmNkIotO1pgM/92ttGdl/ijjPou3M7znfT60+cj+YXphl0DLjcA==
@@ -5094,10 +5094,10 @@ pretty-quick@3.1.0:
     mri "^1.1.5"
     multimatch "^4.0.0"
 
-probot@10.9.4:
-  version "10.9.4"
-  resolved "https://registry.yarnpkg.com/probot/-/probot-10.9.4.tgz#9f5aa011bc47e6cc9f6f251014c26f3f1f9bf03c"
-  integrity sha512-ZAQFhMoF/tCSjGWBUcHlc5VuL/oKflRRoo7oaUgW4nj/ieVN3hCOae8UHyH/19/dgYKsAxGn1w0l5T4ZfB2bnw==
+probot@10.9.5:
+  version "10.9.5"
+  resolved "https://registry.yarnpkg.com/probot/-/probot-10.9.5.tgz#10856bc50f33322f80fad744473c7b44c602c641"
+  integrity sha512-IQ/E2G5EDY3YlmBmg5B7Mi0nW+PRt4gEyDIDR2r+KZSzAbA2VHSAjaL4X2PP0uECsNzt5/BXTHexVAaHToa4kA==
   dependencies:
     "@octokit/auth-app" "^2.4.14"
     "@octokit/auth-unauthenticated" "^1.0.0"
@@ -5110,7 +5110,7 @@ probot@10.9.4:
     "@octokit/plugin-throttling" "^3.3.0"
     "@octokit/request" "^5.1.0"
     "@octokit/types" "^5.0.1"
-    "@octokit/webhooks" "^7.13.0"
+    "@octokit/webhooks" "^7.15.0"
     "@probot/octokit-plugin-config" "^1.0.0"
     "@probot/pino" "^1.1.2"
     "@types/express" "^4.17.2"
