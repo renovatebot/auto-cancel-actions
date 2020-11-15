@@ -48,7 +48,7 @@
     "prettier-plugin-package": "1.2.0",
     "pretty-quick": "3.1.0",
     "sync-glitch-cli": "2.0.1",
-    "ts-jest": "26.4.3",
+    "ts-jest": "26.4.4",
     "typescript": "4.0.5"
   },
   "contributors": [
