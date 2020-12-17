@@ -1,10 +1,16 @@
-import { ActionsGetWorkflowRunResponseData } from '@octokit/types';
 import is from '@sindresorhus/is';
 import chalk from 'chalk';
 import { Logger } from 'probot';
 import { dryRun, loadConfig } from './config';
 import { isbranchAllowed } from './filter';
-import { Config, ProbotCheckRunContext, WorkflowData, isEvent } from './types';
+import {
+  Config,
+  GetJobForWorkflowRunResponse,
+  GetWorkflowRunResponse,
+  ProbotCheckRunContext,
+  WorkflowData,
+  isEvent,
+} from './types';
 
 export class Runner {
   private readonly _log: Logger;
@@ -21,15 +27,15 @@ export class Runner {
   async run(): Promise<void> {
     const log = this._log;
     const context = this._context;
-    const { github, payload } = context;
+    const { octokit: github, payload } = context;
     const id = payload.check_run.id;
     log.info('Running check ...');
     try {
       const { data: check } = await github.checks.get(
         context.repo({ check_run_id: id })
       );
-      if (check.app.slug !== 'github-actions') {
-        log.info({ app: check.app.slug }, 'Ignore app');
+      if (check.app?.slug !== 'github-actions') {
+        log.info({ app: check.app?.slug }, 'Ignore app');
         return;
       }
       const cfg = await loadConfig(this._context, log);
@@ -94,7 +100,7 @@ export class Runner {
     }
   }
 
-  private _check(cfg: Config, wf: ActionsGetWorkflowRunResponseData): boolean {
+  private _check(cfg: Config, wf: GetWorkflowRunResponse['data']): boolean {
     const log = this._log;
     if (!isEvent(wf.event)) {
       log.warn('Invalid event:', wf.event);
@@ -108,7 +114,7 @@ export class Runner {
     if (evCfg === null || is.nullOrUndefined(evCfg.branches)) {
       return true;
     }
-    if (isbranchAllowed(wf.head_branch, evCfg.branches)) {
+    if (wf.head_branch && isbranchAllowed(wf.head_branch, evCfg.branches)) {
       return true;
     }
     log.info(chalk.yellow('Ignore branch:'), wf.head_branch);
@@ -117,12 +123,16 @@ export class Runner {
 
   private async _getWorkflowId(cfg: Config): Promise<WorkflowData | null> {
     const context = this._context;
-    const { github: api, log, payload } = context;
+    const { octokit: api, log, payload } = context;
     try {
-      const { data: job } = await api.actions.getJobForWorkflowRun(
+      const {
+        data: job,
+      }: GetJobForWorkflowRunResponse = await api.actions.getJobForWorkflowRun(
         context.repo({ job_id: payload.check_run.id })
       );
-      const { data: wf } = await api.actions.getWorkflowRun(
+      const {
+        data: wf,
+      }: GetWorkflowRunResponse = await api.actions.getWorkflowRun(
         context.repo({ run_id: job.run_id })
       );
       if (!this._check(cfg, wf)) {
@@ -131,7 +141,9 @@ export class Runner {
       const [, workflow_id] = /\/(\d+)$/.exec(wf.workflow_url) ?? [];
       return {
         workflow_id: parseInt(workflow_id),
-        branch: wf.head_branch,
+        // already checked before
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        branch: wf.head_branch!,
         run_id: job.run_id,
         run_number: wf.run_number,
         event: wf.event,

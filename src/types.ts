@@ -1,7 +1,15 @@
-import { EventPayloads } from '@octokit/webhooks';
+import { RestEndpointMethodTypes } from '@octokit/plugin-rest-endpoint-methods';
+import { EventPayloads, WebhookEvent } from '@octokit/webhooks';
 import { Context } from 'probot';
 
-export type ProbotCheckRunContext = Context<EventPayloads.WebhookPayloadCheckRun>;
+export type ProbotCheckRunContext = WebhookEvent<EventPayloads.WebhookPayloadCheckRun> &
+  Omit<Context, keyof WebhookEvent>;
+
+export type GetJobForWorkflowRunResponse = {
+  data: { run_id: number };
+};
+
+export type GetWorkflowRunResponse = RestEndpointMethodTypes['actions']['getWorkflowRun']['response'];
 
 export type EventConfig = {
   branches?: string[];
