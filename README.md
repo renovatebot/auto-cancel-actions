@@ -2,17 +2,19 @@
 
 # auto-cancel-actions
 
-Github app to autocancel previous builds of github workflows. This action is automatically deployed to [glitch](https://glitch.com/~renovatebot-auto-cancel-actions).
+Github app to autocancel previous builds of GitHub workflows.
+This action is automatically deployed to [Glitch](https://glitch.com/~renovatebot-auto-cancel-actions).
 
 ## Configuration
 
-Config file need to be: `.github/auto-cancel-actions.yml` and `version` mus be `1`.
+The configuration file is called `auto-cancel-actions.yml` and must be placed in the `.github` directory: `.github/auto-cancel-actions.yml`.
+At the top of this file you must specify that the `version` is `1`.
 
 `branches` are a list of [`micromatch`](https://www.npmjs.com/package/micromatch) expressions.
 
-### Samples
+### Example configurations
 
-Don't cancel workflows on master branch (default config)
+#### Don't cancel workflows on `master` branch (default config)
 
 ```yml
 version: 1
@@ -22,7 +24,7 @@ push:
 pull_request:
 ```
 
-Cancel workflows on all branches and pull requests
+#### Cancel workflows on all branches and pull requests
 
 ```yml
 version: 1
@@ -30,7 +32,7 @@ push:
 pull_request:
 ```
 
-Cancel only workflows on `master` or `renovate/**` branches
+#### Cancel only workflows on `master` or `renovate/**` branches
 
 ```yml
 version: 1
@@ -42,8 +44,8 @@ push:
 
 ## Deployment
 
-see https://probot.github.io/docs/deployment/#deploy-the-app
+For more information about deploying the bot, read the [probot docs on deployment](https://probot.github.io/docs/deployment/#deploy-the-app).
 
 ## Configuration
 
-see https://probot.github.io/docs/configuration/
+For more information about configuring the bot, read the [probot docs on configuration](https://probot.github.io/docs/configuration/).
