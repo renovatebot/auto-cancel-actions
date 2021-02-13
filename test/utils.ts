@@ -7,7 +7,7 @@ export function mocked<T>(module: T): jest.Mocked<T> {
 }
 
 /**
- * Simply wrapper to create partial mocks.
+ * Simple wrapper to create partial mocks.
  * @param obj Object to cast to final type
  */
 export function partial<T>(obj?: Partial<T>): T {
