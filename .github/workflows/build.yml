@@ -38,7 +38,7 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-      - name: glith deploy
+      - name: Deploy to Glitch
         if: github.ref == 'refs/heads/master'
         run: |
           if [[ ! -z "$GLITCH_PROJECT_ID" ]] && [[ ! -z "$GLITCH_TOKEN" ]]
