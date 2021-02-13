@@ -13,13 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v2.3.4
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.4
 
-      - run: yarn install --frozen-lockfile
+      - name: Install dependencies with Yarn
+        run: yarn install --frozen-lockfile
 
-      - run: yarn lint
+      - name: Lint files
+        run: yarn lint
 
-      - run: yarn jest --maxWorkers=2 --ci --coverage
+      - name: Run Jest tests
+        run: yarn jest --maxWorkers=2 --ci --coverage
 
       - name: Upload coverage
         uses: actions/upload-artifact@v2.2.2
