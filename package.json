@@ -49,7 +49,7 @@
     "pretty-quick": "3.1.0",
     "sync-glitch-cli": "2.0.1",
     "ts-jest": "26.5.2",
-    "typescript": "4.1.5"
+    "typescript": "4.2.2"
   },
   "contributors": [
     "Michael Kriese <michael.kriese@visualon.de>"
