@@ -5199,10 +5199,10 @@ pretty-quick@3.1.0:
     mri "^1.1.5"
     multimatch "^4.0.0"
 
-probot@11.0.6:
-  version "11.0.6"
-  resolved "https://registry.yarnpkg.com/probot/-/probot-11.0.6.tgz#9ed421a8d4b89f8ee8873374668aeb9eca5760c4"
-  integrity sha512-KvX931ZXno/jveNbMk+1QeWa63XOJWfnGHDGiE1R+r54VHEg7dQAeLpaOjTX34DiZpTlFUvyulXZoFMDFnQsYQ==
+probot@11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/probot/-/probot-11.1.0.tgz#8cf63bf2b8c57759ac66bcc155d3769dca64f128"
+  integrity sha512-h+Bty4+mxrF+lstLlzfwBZSRO5OnTUGbYWjMWadFoYoal3dGqIf7VQFloCZZM2qNTpHqRawnqW20ZLHoErcF9Q==
   dependencies:
     "@octokit/core" "^3.2.4"
     "@octokit/plugin-enterprise-compatibility" "^1.2.8"
