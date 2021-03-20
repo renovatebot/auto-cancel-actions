@@ -6,7 +6,7 @@ export const configFile = 'auto-cancel-actions.yml';
 
 export const defaultConfig: Config = {
   version: 1,
-  push: { branches: ['!master'] },
+  push: { branches: ['!main'] },
   pull_request: {},
 };
 

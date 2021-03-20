@@ -14,13 +14,13 @@ At the top of this file you must specify that the `version` is `1`.
 
 ### Example configurations
 
-#### Don't cancel workflows on `master` branch (default config)
+#### Don't cancel workflows on `main` branch (default config)
 
 ```yml
 version: 1
 push:
   branches:
-    - '!master'
+    - '!main'
 pull_request:
 ```
 
@@ -32,13 +32,13 @@ push:
 pull_request:
 ```
 
-#### Cancel only workflows on `master` or `renovate/**` branches
+#### Cancel only workflows on `main` or `renovate/**` branches
 
 ```yml
 version: 1
 push:
   branches:
-    - master
+    - main
     - 'renovate/**'
 ```
 

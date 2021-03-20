@@ -3,7 +3,7 @@ name: build
 on:
   push:
     branches:
-      - master
+      - main
       - 'renovate/**'
 
   pull_request:
@@ -43,7 +43,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Deploy to Glitch
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         run: |
           if [[ ! -z "$GLITCH_PROJECT_ID" ]] && [[ ! -z "$GLITCH_TOKEN" ]]
           then
