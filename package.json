@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@sindresorhus/is": "4.0.0",
-    "micromatch": "4.0.2",
+    "micromatch": "4.0.4",
     "probot": "11.1.0",
     "source-map-support": "0.5.19"
   },
