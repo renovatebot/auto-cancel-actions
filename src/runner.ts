@@ -125,16 +125,12 @@ export class Runner {
     const context = this._context;
     const { octokit: api, log, payload } = context;
     try {
-      const {
-        data: job,
-      }: GetJobForWorkflowRunResponse = await api.actions.getJobForWorkflowRun(
-        context.repo({ job_id: payload.check_run.id })
-      );
-      const {
-        data: wf,
-      }: GetWorkflowRunResponse = await api.actions.getWorkflowRun(
-        context.repo({ run_id: job.run_id })
-      );
+      const { data: job }: GetJobForWorkflowRunResponse =
+        await api.actions.getJobForWorkflowRun(
+          context.repo({ job_id: payload.check_run.id })
+        );
+      const { data: wf }: GetWorkflowRunResponse =
+        await api.actions.getWorkflowRun(context.repo({ run_id: job.run_id }));
       if (!this._check(cfg, wf)) {
         return null;
       }
