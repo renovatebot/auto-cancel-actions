@@ -2,16 +2,15 @@ name: build
 
 on:
   push:
-    branches:
-      - main
-      - 'renovate/**'
-
   pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' || github.repository_owner != github.event.pull_request.head.repo.owner.login }}
+
     timeout-minutes: 10
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
