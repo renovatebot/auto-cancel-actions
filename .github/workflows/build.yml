@@ -33,13 +33,9 @@ jobs:
           path: coverage
 
       - name: Codecov
-        shell: bash
-        if: always()
         continue-on-error: true
-        run: |
-          [[ ! -z "$CODECOV_TOKEN" ]] && bash <(curl -s https://codecov.io/bash)
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        uses: codecov/codecov-action@v1.5.0
+        if: always()
 
       - name: Deploy to Glitch
         if: github.ref == 'refs/heads/main'
