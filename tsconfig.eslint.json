@@ -2,8 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "sourceMap": false,
-    "incremental": true,
-    "types": ["node"]
+    "incremental": true
   },
   "include": ["**/*.js", "**/*.ts", ".eslintrc.js"]
 }
