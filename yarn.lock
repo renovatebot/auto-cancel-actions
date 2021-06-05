@@ -4618,10 +4618,10 @@ pretty-quick@3.1.0:
     mri "^1.1.5"
     multimatch "^4.0.0"
 
-probot@11.3.1:
-  version "11.3.1"
-  resolved "https://registry.yarnpkg.com/probot/-/probot-11.3.1.tgz#61352c4aad0c9716d4fdce34cddee3d922a22c7f"
-  integrity sha512-luw/OVB8NfuadTNMbRoClBHnTIA/KWc6zR9EWm3UQkPD1GtjEAhqWyEGiD7313rtv8vBlO+PcERuRhSN7EOojQ==
+probot@11.3.2:
+  version "11.3.2"
+  resolved "https://registry.yarnpkg.com/probot/-/probot-11.3.2.tgz#1260d63b645225105974056cc7a38228811d564b"
+  integrity sha512-JN+jzjkVAHFj6pBQgvO27vjW9IwA9QOtSLNxxak4rnalNSo09u1Srr01TlqYoalbsNiwbVx2tXvBSDZZLkXCcw==
   dependencies:
     "@octokit/core" "^3.2.4"
     "@octokit/plugin-enterprise-compatibility" "^1.2.8"
