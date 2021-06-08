@@ -4595,10 +4595,10 @@ pretty-quick@3.1.0:
     mri "^1.1.5"
     multimatch "^4.0.0"
 
-probot@11.3.2:
-  version "11.3.2"
-  resolved "https://registry.yarnpkg.com/probot/-/probot-11.3.2.tgz#1260d63b645225105974056cc7a38228811d564b"
-  integrity sha512-JN+jzjkVAHFj6pBQgvO27vjW9IwA9QOtSLNxxak4rnalNSo09u1Srr01TlqYoalbsNiwbVx2tXvBSDZZLkXCcw==
+probot@11.4.0:
+  version "11.4.0"
+  resolved "https://registry.yarnpkg.com/probot/-/probot-11.4.0.tgz#3b36a5bd35129653c5f8c1a3b15fbac7a700c149"
+  integrity sha512-FrFL30D0gygWiDmP6z6oO5XpNMVKVdUgZJjRRf9KU9Px5Kcb6Ph9rjZ0NE2ogo9NT6bNxeoTYduczxm65TMmcw==
   dependencies:
     "@octokit/core" "^3.2.4"
     "@octokit/plugin-enterprise-compatibility" "^1.2.8"
