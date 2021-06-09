@@ -34,7 +34,7 @@ jobs:
 
       - name: Codecov
         continue-on-error: true
-        uses: codecov/codecov-action@v1.5.1
+        uses: codecov/codecov-action@v1.5.2
         if: always()
 
       - name: Deploy to Glitch
