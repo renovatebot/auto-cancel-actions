@@ -34,7 +34,7 @@ jobs:
 
       - name: Codecov
         continue-on-error: true
-        uses: codecov/codecov-action@29386c70ef20e286228c72b668a06fd0e8399192 # renovate: tag=v1.5.2
+        uses: codecov/codecov-action@5a8bb4701eca7ba3673f21664b887f652c58d0a3 # renovate: tag=v2.0.3
         if: always()
 
       - name: Deploy to Glitch
